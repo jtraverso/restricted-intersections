@@ -1,99 +1,116 @@
-# Ray-Chaudhuri–Wilson: uniform families with restricted intersections
+# Frankl–Wilson and Ray-Chaudhuri–Wilson intersection bounds
 
-Lean 4 formalization of **Theorem 3** of D. K. Ray-Chaudhuri and R. M. Wilson,
-*On t-designs*, Osaka Journal of Mathematics 12 (1975), 737–744.
-The [open paper](https://www.i-repository.net/contents/osakacu/sugaku/111F0000002-01203-15.pdf)
-and its [institutional record](https://doi.org/10.18910/7296) were consulted.
+Lean 4 formalizations of two classical restricted-intersection results:
 
-Let F be a family of k-element subsets of an n-element ground set. Let L be a finite
-set of integers in {0, …, k−1}. If every intersection of two distinct members has
-cardinality in L, then
+- P. Frankl and R. M. Wilson, *Intersection theorems with geometric consequences*,
+  Combinatorica 1 (1981), 357–368, [DOI](https://doi.org/10.1007/BF02579457).
+- D. K. Ray-Chaudhuri and R. M. Wilson, *On t-designs*, Osaka Journal of Mathematics
+  12 (1975), 737–744, Theorem 3, [open paper](https://www.i-repository.net/contents/osakacu/sugaku/111F0000002-01203-15.pdf),
+  [institutional archival DOI](https://doi.org/10.18910/7296).
 
-\[
-|F|\leq\binom{n}{|L|}.
-\]
+## Sharp prime-modular bound
 
-Zero is an allowed intersection size. Empty families, empty ground sets, and k = 0
-are included. No additional dimension, nonsingularity, or polynomial hypothesis is
-assumed. The condition |L| ≤ k follows from L ⊆ {0, …, k−1}.
+Let F be a family of k-element subsets of an n-element ground set, p a prime, and
+L a set of s residues modulo p, with s ≤ k and k mod p outside L. If every distinct
+pair of blocks has its intersection cardinality modulo p in L, then
+
+**|F| ≤ binomial(n,s).**
+
+The theorem `IntersectionBounds.franklWilson` uses `L : Finset (ZMod p)` and
+`[Fact p.Prime]`. Its only hypotheses are uniformity, s ≤ k, diagonal residue
+exclusion, and the distinct-pair intersection condition. It imposes no assumption
+that k < p or that k mod p ≥ s. All rank and nonvanishing assertions are proved.
+
+The condition s ≤ k is necessary with the usual convention that a binomial
+coefficient vanishes above n. On an empty ground set, F = {∅}, p = 2, k = 0,
+and L = {1} satisfy the other conditions but 1 > binomial(0,1).
+The kernel-checked audit includes this counterexample.
 
 ## Selected statements
 
-All statements are in namespace `IntersectionBounds`.
+All eight statements are in namespace `IntersectionBounds`. The four RCW results
+from the preceding version retain their definitions, statements, and proofs.
 
 | Theorem | Scope |
 | --- | --- |
-| `rayChaudhuriWilson` | The sharp uniform L-intersection bound above |
-| `card_le_choose_spectrum` | The same bound using exactly the intersection cardinalities that occur |
-| `uniform_fisher` | If every distinct pair intersects in the same l < k points, then |F| ≤ n |
-| `sharp_example` | All s-subsets, with L = {0, …, s−1}, attain \(\binom ns\) |
+| `franklWilson` | Sharp uniform prime-modular intersection bound |
+| `franklWilson_nonuniform` | Without uniformity, with every block-size residue outside L: cardinality at most the sum of binomial(n,i) for 0 ≤ i ≤ s |
+| `franklWilson_forbidden_residue` | If p−1 ≤ k and no distinct intersection has residue k mod p, cardinality at most binomial(n,p−1) |
+| `franklWilson_coloring_bound` | An r-color assignment to all k-subsets whose monochromatic pairs exclude that residue satisfies binomial(n,k) ≤ r · binomial(n,p−1) |
+| `rayChaudhuriWilson` | Uniform nonmodular L-intersection bound, with every l in L below k |
+| `card_le_choose_spectrum` | RCW using exactly the intersection cardinalities that occur |
+| `uniform_fisher` | Uniform one-intersection consequence: cardinality at most n |
+| `sharp_example` | All s-subsets attain the RCW bound |
 
-`Uniform F k` explicitly means that every member has cardinality k. `IntersectionsIn F L`
-quantifies over distinct members. `intersectionSpectrum F` takes the image of the
-off-diagonal pairs. These definitions are repeated independently in `Challenge.lean`.
-Members are finite subsets of a finite type; a family has no repeated blocks.
-
-This covers the intersection theorem and the stated consequences. The paper's lower
-bounds on the number of blocks of t-designs, tight-design classification, and arithmetic
-conditions are outside this scope. The one-intersection corollary here is a bound on
-uniform set families, rather than a formalization of the entire theory of Fisher inequalities.
+The coloring statement is a finite modular intersection graph consequence. The
+paper's Euclidean distance graph bounds, asymptotic constants, and remaining
+geometric applications are outside this delivery. Prime-power/composite moduli
+and the unrestricted nonmodular nonuniform theorem are also outside scope.
+`franklWilson_nonuniform` explicitly requires diagonal residue exclusion.
+The RCW entry covers Theorem 3 and the displayed consequences, not the paper's
+t-design lower bounds or classification of tight designs.
 
 ## Proof and reuse
 
-The proof uses Mathlib finite sets, spans, linear independence, finite-dimensional
-linear algebra, and rational arithmetic. The project defines evaluations of squarefree
-monomials, `indicator T B = 1` when T ⊆ B and 0 otherwise. Multiplication corresponds
-to taking the union of monomial supports. Their span up to degree d contains the
-separating products
+The existing `EvaluationSpace`, `Separation`, and `UniformSpace` modules are reused
+unchanged. They implement squarefree monomials as evaluation functions: the
+indicator of T at B is 1 if T is a subset of B and 0 otherwise. Their degree-bounded
+span contains products of intersection-size factors. For uniform families,
+over the rationals, the identity
 
-\[
-f_A(B)=\prod_{l\in L}(|A\cap B|-l).
-\]
+(k−|T|) · indicator(T) = sum over a outside T of indicator(T ∪ {a})
 
-Off the diagonal these evaluations vanish; on the diagonal they are nonzero. Thus
-the separating functions are linearly independent. Uniformity supplies the identity
+expresses lower-degree evaluations using degree-s monomials. There are binomial(n,s)
+such monomials.
 
-\[
-(k-|T|)\,\mathrm{indicator}_T
-=\sum_{a\notin T}\mathrm{indicator}_{T\cup\{a\}}.
-\]
+The new proof avoids dividing modulo p. It forms an **integer** matrix
 
-Over the rationals, it expresses every lower-degree evaluation as a combination of
-degree-exactly-|L| evaluations. At most \(\binom n{|L|}\) such monomials exist, giving
-the dimension bound and the theorem. This evaluation-space proof differs from the
-original paper's matrix argument.
+M(A,B) = product over l in L of (|A ∩ B| − val(l)).
 
-`EvaluationSpace.lean` and `Separation.lean` work over an arbitrary field, including
-positive characteristic. The uniform homogenization step additionally uses characteristic
-zero. This isolates reusable infrastructure for future modular intersection theorems;
-Frankl–Wilson is not assumed or claimed by this package.
+Modulo p this matrix is diagonal with nonzero diagonal entries. Its integer
+determinant is therefore nonzero, as is its rational determinant. Thus the rational
+lifted separator functions are linearly independent. They lie in the existing
+degree-s evaluation space, and the rational homogenization gives the sharp bound.
+No modular invertibility premise is added to the mathematical theorem.
+
+`DegreeDimension.lean` additionally counts all squarefree supports of size at most
+s. Together with the previous arbitrary-field separation lemma, this proves the
+modular nonuniform bound. Residue complementation and counting color classes give
+the remaining consequences.
+
+The [primary publisher abstract](https://doi.org/10.1007/BF02579457) supplies the
+main uniform modular assertion. A [public scan](https://www.cs.umd.edu/~gasarch/TOPICS/CRT/FW.pdf)
+is available, but its pages are image-only in the available reader. Statements
+and the polynomial-method context were cross-checked with Alon–Babai–Suzuki,
+[*Multilinear polynomials and Frankl–Ray-Chaudhuri–Wilson type intersection theorems*](https://web.math.princeton.edu/~nalon/PDFS/suzuki1.pdf),
+Theorems 1.2 and 3.1. No Lean code was copied from that exposition, and no theorem
+number from the unreadable primary scan is asserted.
 
 ## Verification
 
-Pinned toolchain: Lean `v4.35.0-rc3`; Mathlib
-`c55e6e786f49471c72fbddbec5415808896aec1e`. Run:
+Pinned Lean: `v4.35.0-rc3`. Pinned Mathlib:
+`c55e6e786f49471c72fbddbec5415808896aec1e`.
 
 ```sh
 ./scripts/check.sh
 ```
 
-Strict compilation, an axiom/boundary audit, and sandboxed Comparator pass locally.
-Comparator checks four theorem types and three explicit definitions against an
-independent Challenge. Both Lean's default kernel and NanoDa accept the solution.
-The only permitted axioms are `propext`, `Classical.choice`, and `Quot.sound`.
-Challenge contains four intentional theorem placeholders; definitions and proof modules
-contain none. No custom axioms are used.
+Strict solution and audit compilation, eight independent theorem contracts,
+three independent definitions, and sandboxed Comparator with Lean and NanoDa
+are checked. The only permitted axioms are `propext`, `Classical.choice`, and
+`Quot.sound`. Challenge has eight intentional theorem placeholders;
+definitions and proof modules have none. No proof module imports Challenge.
 
-`Audit.lean` includes the empty-set case, equality with all six pairs of four points,
-and a nonuniform counterexample: the empty set and four singletons have all pairwise
-intersection sizes zero but five members, exceeding \(\binom41\). Thus uniformity is
-a material hypothesis. Calculations use kernel-checked `decide` and proof tactics.
+The audit checks the six-pair sharp modular example, k mod p below s, zero degree,
+the necessity of s ≤ k, different block sizes, and an impossible one-color instance.
+It retains all previous RCW boundary checks. Calculations use proof tactics and
+kernel-reduced `decide`.
 
 See [formalization.yaml](formalization.yaml), [VERIFICATION.md](VERIFICATION.md), and
-[MATHLIB_DEFINITIONS.md](MATHLIB_DEFINITIONS.md). The prepared GitHub workflows run strict
-CI and the official full Palomar mechanical preflight; their run results determine
-remote verification status. Preflight does not itself submit or register an entry.
+[MATHLIB_DEFINITIONS.md](MATHLIB_DEFINITIONS.md). Workflows run strict Lean CI and the
+official full Palomar preflight. Their published results determine remote status.
+**Preflight does not submit or register an entry.**
 
-Author and responsible maintainer: Juan Pablo Traverso Gianini. New proofs and packaging
-were produced with OpenAI Codex using Mathlib infrastructure. No independent human
-mathematical review or mathematical novelty is claimed. License: Apache-2.0.
+Author and responsible maintainer: Juan Pablo Traverso Gianini. New proofs and
+packaging produced with OpenAI Codex. No independent human mathematical review or
+mathematical novelty is claimed. License: Apache-2.0.

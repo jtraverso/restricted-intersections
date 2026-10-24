@@ -5,7 +5,11 @@
     "IntersectionBounds.rayChaudhuriWilson",
     "IntersectionBounds.card_le_choose_spectrum",
     "IntersectionBounds.uniform_fisher",
-    "IntersectionBounds.sharp_example"
+    "IntersectionBounds.sharp_example",
+    "IntersectionBounds.franklWilson",
+    "IntersectionBounds.franklWilson_nonuniform",
+    "IntersectionBounds.franklWilson_forbidden_residue",
+    "IntersectionBounds.franklWilson_coloring_bound"
   ],
   "definition_names": [
     "IntersectionBounds.Uniform",

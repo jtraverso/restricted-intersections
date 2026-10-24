@@ -84,3 +84,25 @@ inclusion, and membership in A ∩ B means membership in both A and B. The finit
 set `univ` contains every element of a Fintype. `range s` contains 0 through s−1.
 `offDiag` consists exactly of pairs of distinct elements of its input family.
 `powersetCard s univ` consists of every s-subset of the finite ground type.
+
+## Mathlib/Data/ZMod/Defs.lean:139
+
+[Source](https://github.com/leanprover-community/mathlib4/blob/c55e6e786f49471c72fbddbec5415808896aec1e/Mathlib/Data/ZMod/Defs.lean#L139)
+
+```lean
+/-- The integers modulo `n : ℕ`. -/
+@[to_additive_dont_translate]
+def ZMod : ℕ → Type
+  | 0 => ℤ
+  | n + 1 => Fin (n + 1)
+```
+
+The commutative-ring operations on positive `ZMod p` are the usual arithmetic
+modulo p. `Fact p.Prime` supplies the primality proof;
+`Mathlib/Algebra/Field/ZMod.lean:27` supplies the field instance. Casting a natural
+number to `ZMod p` takes its residue class. `ZMod.val` chooses the representative
+in 0 through p−1 for positive p. The new Challenge statements use these standard
+Mathlib definitions directly; there is no abstract replacement for modular
+arithmetic and no custom field axiom. The sums are over `Finset.range (s+1)`,
+i.e. degrees 0 through s inclusive. `Fin r` is the finite color palette 0 through
+r−1, including an empty palette when r = 0.

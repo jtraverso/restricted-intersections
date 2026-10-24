@@ -21,7 +21,7 @@ jobs:
       repository: jtraverso/restricted-intersections
       commit: ${{ inputs.commit || github.event.pull_request.head.sha || github.sha }}
       pipeline_commit: c02bbeaed888df45c4e28c4e99dba540ad21552a
-      request_id: rcwproof0001
+      request_id: franklwilson
       mode: full
       execution_profile: palomar-standard-v1
       options: '{"comparator_config_path": "comparator.json", "authorization_relationship": "I am a responsible author or maintainer"}'

@@ -1,28 +1,40 @@
-Build completed successfully (1563 jobs).
-ℹ [1563/1564] Replayed Audit
+Build completed successfully (1664 jobs).
+ℹ [1664/1665] Replayed Audit
 info: Audit.lean:12:0: 'IntersectionBounds.rayChaudhuriWilson' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: Audit.lean:13:0: 'IntersectionBounds.card_le_choose_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: Audit.lean:14:0: 'IntersectionBounds.uniform_fisher' depends on axioms: [propext, Classical.choice, Quot.sound]
 info: Audit.lean:15:0: 'IntersectionBounds.sharp_example' depends on axioms: [propext, Classical.choice, Quot.sound]
-Build completed successfully (1564 jobs).
-⚠ [737/738] Replayed Challenge
-warning: Challenge.lean:36:8: declaration uses `sorry`
-warning: Challenge.lean:41:8: declaration uses `sorry`
-warning: Challenge.lean:46:8: declaration uses `sorry`
-warning: Challenge.lean:53:8: declaration uses `sorry`
-Build completed successfully (738 jobs).
+info: Audit.lean:17:0: 'IntersectionBounds.franklWilson' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:18:0: 'IntersectionBounds.franklWilson_nonuniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:19:0: 'IntersectionBounds.franklWilson_forbidden_residue' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:20:0: 'IntersectionBounds.franklWilson_coloring_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (1665 jobs).
+⚠ [1152/1153] Replayed Challenge
+warning: Challenge.lean:37:8: declaration uses `sorry`
+warning: Challenge.lean:42:8: declaration uses `sorry`
+warning: Challenge.lean:47:8: declaration uses `sorry`
+warning: Challenge.lean:54:8: declaration uses `sorry`
+warning: Challenge.lean:60:8: declaration uses `sorry`
+warning: Challenge.lean:67:8: declaration uses `sorry`
+warning: Challenge.lean:74:8: declaration uses `sorry`
+warning: Challenge.lean:81:8: declaration uses `sorry`
+Build completed successfully (1153 jobs).
 Resolving dependencies
 Building Challenge
-⚠ [737/738] Replayed Challenge
-warning: Challenge.lean:36:8: declaration uses `sorry`
-warning: Challenge.lean:41:8: declaration uses `sorry`
-warning: Challenge.lean:46:8: declaration uses `sorry`
-warning: Challenge.lean:53:8: declaration uses `sorry`
-Build completed successfully (738 jobs).
-Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, IntersectionBounds.rayChaudhuriWilson, IntersectionBounds.card_le_choose_spectrum, IntersectionBounds.uniform_fisher, IntersectionBounds.sharp_example, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, IntersectionBounds.Uniform, IntersectionBounds.IntersectionsIn, IntersectionBounds.intersectionSpectrum] from Challenge
+⚠ [1152/1153] Replayed Challenge
+warning: Challenge.lean:37:8: declaration uses `sorry`
+warning: Challenge.lean:42:8: declaration uses `sorry`
+warning: Challenge.lean:47:8: declaration uses `sorry`
+warning: Challenge.lean:54:8: declaration uses `sorry`
+warning: Challenge.lean:60:8: declaration uses `sorry`
+warning: Challenge.lean:67:8: declaration uses `sorry`
+warning: Challenge.lean:74:8: declaration uses `sorry`
+warning: Challenge.lean:81:8: declaration uses `sorry`
+Build completed successfully (1153 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, IntersectionBounds.rayChaudhuriWilson, IntersectionBounds.card_le_choose_spectrum, IntersectionBounds.uniform_fisher, IntersectionBounds.sharp_example, IntersectionBounds.franklWilson, IntersectionBounds.franklWilson_nonuniform, IntersectionBounds.franklWilson_forbidden_residue, IntersectionBounds.franklWilson_coloring_bound, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, IntersectionBounds.Uniform, IntersectionBounds.IntersectionsIn, IntersectionBounds.intersectionSpectrum] from Challenge
 Building Solution
-Build completed successfully (1563 jobs).
-Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, IntersectionBounds.rayChaudhuriWilson, IntersectionBounds.card_le_choose_spectrum, IntersectionBounds.uniform_fisher, IntersectionBounds.sharp_example, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, IntersectionBounds.Uniform, IntersectionBounds.IntersectionsIn, IntersectionBounds.intersectionSpectrum] from Solution
+Build completed successfully (1664 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, IntersectionBounds.rayChaudhuriWilson, IntersectionBounds.card_le_choose_spectrum, IntersectionBounds.uniform_fisher, IntersectionBounds.sharp_example, IntersectionBounds.franklWilson, IntersectionBounds.franklWilson_nonuniform, IntersectionBounds.franklWilson_forbidden_residue, IntersectionBounds.franklWilson_coloring_bound, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, IntersectionBounds.Uniform, IntersectionBounds.IntersectionsIn, IntersectionBounds.intersectionSpectrum] from Solution
 Running nanoda kernel on solution
 nanoda kernel accepts the solution
 Running Lean default kernel on solution

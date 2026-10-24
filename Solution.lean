@@ -5,4 +5,4 @@ Authors: Juan Pablo Traverso Gianini
 -/
 module
 
-public import IntersectionBounds.RayChaudhuriWilson
+public import IntersectionBounds.FranklWilson
