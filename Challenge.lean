@@ -8,6 +8,7 @@ module
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Finset.Powerset
 public import Mathlib.Data.Finset.Prod
+public import Mathlib.Algebra.Field.ZMod
 
 @[expose] public section
 
@@ -54,5 +55,33 @@ theorem sharp_example (s : ℕ) :
     let F := (Finset.univ : Finset V).powersetCard s
     Uniform F s ∧ IntersectionsIn F (Finset.range s) ∧
       F.card = (Fintype.card V).choose s := by sorry
+
+open Classical in
+theorem franklWilson (p : ℕ) [Fact p.Prime]
+    (F : Finset (Finset V)) (L : Finset (ZMod p)) (k : ℕ)
+    (huni : Uniform F k) (hs : L.card ≤ k) (hk : (k : ZMod p) ∉ L)
+    (hinter : ∀ A ∈ F, ∀ B ∈ F, A ≠ B → ((A ∩ B).card : ZMod p) ∈ L) :
+    F.card ≤ (Fintype.card V).choose L.card := by sorry
+
+open Classical in
+theorem franklWilson_nonuniform (p : ℕ) [Fact p.Prime]
+    (F : Finset (Finset V)) (L : Finset (ZMod p))
+    (hself : ∀ A ∈ F, (A.card : ZMod p) ∉ L)
+    (hinter : ∀ A ∈ F, ∀ B ∈ F, A ≠ B → ((A ∩ B).card : ZMod p) ∈ L) :
+    F.card ≤ ∑ i ∈ Finset.range (L.card + 1), (Fintype.card V).choose i := by sorry
+
+open Classical in
+theorem franklWilson_forbidden_residue (p : ℕ) [Fact p.Prime]
+    (F : Finset (Finset V)) (k : ℕ) (huni : Uniform F k) (hpk : p - 1 ≤ k)
+    (hinter : ∀ A ∈ F, ∀ B ∈ F, A ≠ B →
+      ((A ∩ B).card : ZMod p) ≠ (k : ZMod p)) :
+    F.card ≤ (Fintype.card V).choose (p - 1) := by sorry
+
+open Classical in
+theorem franklWilson_coloring_bound (p : ℕ) [Fact p.Prime] (k r : ℕ)
+    (hpk : p - 1 ≤ k) (c : Finset V → Fin r)
+    (hcolor : ∀ A B : Finset V, A.card = k → B.card = k → A ≠ B → c A = c B →
+      ((A ∩ B).card : ZMod p) ≠ (k : ZMod p)) :
+    (Fintype.card V).choose k ≤ r * (Fintype.card V).choose (p - 1) := by sorry
 
 end IntersectionBounds

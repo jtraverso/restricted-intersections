@@ -1,11 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
 version: v0.4
 project:
-  name: 'Ray-Chaudhuri–Wilson: uniform families with restricted intersections'
-  description: 'Formalizes Theorem 3 of On t-designs (1975): a k-uniform family of subsets of an n-element
-    ground set whose distinct-pair intersection sizes lie in L ⊆ {0,...,k−1} has at most binomial(n,|L|)
-    members. Includes the actual-intersection-spectrum formulation, the uniform one-intersection bound,
-    and equality examples consisting of all s-subsets.'
+  name: Frankl–Wilson and Ray-Chaudhuri–Wilson intersection bounds
+  description: Sharp uniform restricted-intersection bounds in characteristic zero and modulo a prime, with
+    modular nonuniform, forbidden-residue and finite-coloring consequences. Extends the verified Ray-Chaudhuri–Wilson
+    package without changing its four selected results.
   authors:
   - Juan Pablo Traverso Gianini
   license: Apache-2.0
@@ -28,17 +27,44 @@ sources:
   location: Osaka Journal of Mathematics 12(3) (1975), 737–744, Theorem 3
   relationship: formalizes
   note: The institutional archival DOI identifies the open paper. Consulted https://www.i-repository.net/contents/osakacu/sugaku/111F0000002-01203-15.pdf.
-    Formalizes the uniform restricted-intersection bound, with stated corollaries and sharpness examples,
-    not the full paper. The new proof uses squarefree evaluation spaces, homogenization, and diagonal
-    separation rather than the original matrix argument.
+    Formalizes the uniform restricted-intersection bound, with stated corollaries and sharpness examples, not
+    the full paper. The new proof uses squarefree evaluation spaces, homogenization, and diagonal separation
+    rather than the original matrix argument.
+  license: unknown
+  author_endorsement: n/a
+- title: Intersection theorems with geometric consequences
+  authors:
+  - Péter Frankl
+  - Richard M. Wilson
+  id: doi:10.1007/BF02579457
+  type: paper
+  location: 'Combinatorica 1(4) (1981), 357–368: uniform modular intersection theorem'
+  relationship: formalizes
+  note: 'The primary publisher abstract states the sharp modular uniform bound. Public scan: https://www.cs.umd.edu/~gasarch/TOPICS/CRT/FW.pdf
+    (image-only in the available reader). The formal statement includes |L| ≤ k, a necessary parameter condition
+    under the standard zero convention for binomial coefficients. Covers the uniform prime-modular theorem
+    and explicitly identified consequences; not the whole paper or its Euclidean asymptotics.'
+  license: unknown
+  author_endorsement: n/a
+- title: Multilinear polynomials and Frankl–Ray-Chaudhuri–Wilson type intersection theorems
+  authors:
+  - Noga Alon
+  - László Babai
+  - Hiroshi Suzuki
+  type: paper
+  location: Journal of Combinatorial Theory, Series A 58 (1991), 165–180; Theorems 1.2 and 3.1
+  relationship: background
+  note: Consulted https://web.math.princeton.edu/~nalon/PDFS/suzuki1.pdf for statement cross-checks and the
+    polynomial method. Its general triangular and multiple-size versions are not claimed here. No Lean code
+    was copied.
   license: unknown
   author_endorsement: n/a
 status:
-  scope: Finite simple set families over an arbitrary finite vertex type, all k including zero, L a
-    finite set of nonnegative integers below k. Four selected statements and three explicit definitions
-    pass Comparator. Empty families and ground sets are included. Solution and library modules contain
-    no placeholders or custom axioms; Challenge contains four intentional theorem placeholders and no
-    definition placeholders.
+  scope: 'Finite families of finite subsets of an arbitrary finite ground type. Eight selected statements:
+    four preserved Ray-Chaudhuri–Wilson results, the sharp uniform prime-modular bound, the modular nonuniform
+    sum-binomial bound with explicit diagonal exclusion, the forbidden block-size residue bound, and a finite
+    coloring inequality. Three compared definitions, eight intentional theorem placeholders only in the independent
+    Challenge. Empty cases are included.'
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -48,34 +74,34 @@ automation:
     models:
     - OpenAI Codex
     framework: Codex
-    tool_setup: Constructed the polynomial evaluation-space proof from Mathlib finite sets, spans, linear
-      independence and finite-dimensional linear algebra. Used strict Lean compilation, axiom and boundary
-      auditing, and sandboxed Comparator with Lean and NanoDa. New code separates arbitrary-field evaluation/separation
-      lemmas from characteristic-zero uniform homogenization; no Frankl–Wilson theorem is assumed.
-    prompting_notes: Human-directed Spanish instructions to continue the prioritized backlog, reusing
-      available infrastructure. No external proving service or sub-agent was used.
-  notes: All new application proofs were produced in this project; existing Mathlib infrastructure is
-    reused. Costs and wall time were not tracked.
+    tool_setup: Reused the existing arbitrary-field evaluation/separation lemmas and characteristic-zero homogenization.
+      New integer evaluation matrix reduces to a nonsingular diagonal matrix over ZMod p. Its determinant lifts
+      to a nonzero rational determinant, proving independence of rational separator evaluations. A new degree-space
+      dimension lemma counts all squarefree supports of size at most s. Verified strict Lean builds, boundary/axiom
+      audit and sandboxed Comparator with Lean and NanoDa. No sub-agent or external proving service was used.
+    prompting_notes: Human-directed Spanish instructions to continue the prioritized backlog, reusing available
+      infrastructure. No external proving service or sub-agent was used.
+  notes: All new application proofs were produced in this project; existing Mathlib infrastructure is reused.
+    Costs and wall time were not tracked.
 fidelity:
-  divergences: 'Theorem 3 is stated with F : Finset (Finset V), so blocks are distinct, and Fintype.card
-    V = n. Uniform F k means every member has cardinality k. IntersectionsIn F L excludes identical
-    pairs; every l ∈ L must satisfy l < k, and |L| ≤ k is derived internally. The diagonal nonzero and
-    rank hypotheses are proved, not assumed. Zero is allowed in L; empty cases are included. The canonical
-    spectrum theorem uses exactly the values that occur. The one-intersection corollary concerns uniform
-    set families. The paper’s t-design lower bounds and later tight-design results are not formalized.
-    Evaluation functions implement the polynomial method directly, with their degree-space and homogeneous-span
-    properties proved.'
+  divergences: Preserves all four prior RCW contracts. In the new uniform theorem p is prime, L is a Finset
+    (ZMod p), F is k-uniform, |L| ≤ k, k modulo p is outside L, and every distinct-pair intersection residue
+    is in L. These are the only hypotheses; determinant nonvanishing and dimension bounds are proved. The parameter
+    |L| ≤ k is necessary with Nat.choose, as a checked counterexample shows. No condition |L| ≤ k modulo p,
+    nor k < p, is imposed. The modular nonuniform theorem explicitly excludes every block-size residue from
+    L; it is not the unrestricted nonmodular nonuniform theorem. The coloring consequence concerns a finite
+    modular intersection graph, not the paper’s Euclidean distance graphs or asymptotic constants. Composite/prime-power
+    moduli, the unrestricted nonmodular nonuniform theorem, and the rest of either paper are not formalized.
 review:
   status: self-assessed
   reviewers:
   - OpenAI Codex (implementing agent, self-assessment)
-  notes: Compared the selected main statement with Theorem 3 of the open paper. Checked the materially
-    necessary uniformity condition, allowed zero intersections, the zero-degree empty-set case, and
-    a six-member sharp example. An explicit five-member nonuniform counterexample on four points is
-    verified. All four selected statements use only propext, Classical.choice and Quot.sound; four statements
-    and three definitions match the independent Challenge, and both Lean and NanoDa accept. No independent
-    human mathematical review or mathematical novelty is claimed. Local verification and prepared preflight
-    workflows do not constitute registry registration.
+  notes: 'Self-assessment: cross-checked the main modular assertion against the primary publisher abstract
+    and Alon–Babai–Suzuki Theorem 1.2. The available primary scan is image-only; no theorem numbering from
+    that scan is asserted. Boundary audit covers sharp modular pairs, k modulo p below |L|, zero degree, necessary
+    |L| ≤ k, a genuinely nonuniform modular family, and an impossible one-color instance. Eight result types
+    and three definitions are checked independently. Only propext, Classical.choice and Quot.sound are permitted.
+    No independent human review or mathematical novelty is claimed. Preflight is not registry registration.'
 alignment:
   namespace: IntersectionBounds
   statements:
@@ -95,5 +121,21 @@ alignment:
     lean: IntersectionBounds.sharp_example
     module: Challenge
     status: proved
-acknowledgements: Mathlib and the Lean community; Ray-Chaudhuri and Wilson for the classical intersection
-  theorem.
+  - source: Frankl–Wilson uniform prime-modular intersection theorem
+    lean: IntersectionBounds.franklWilson
+    module: Challenge
+    status: proved
+  - source: Standard modular nonuniform polynomial-method bound with diagonal exclusion
+    lean: IntersectionBounds.franklWilson_nonuniform
+    module: Challenge
+    status: proved
+  - source: Uniform forbidden block-size residue corollary
+    lean: IntersectionBounds.franklWilson_forbidden_residue
+    module: Challenge
+    status: proved
+  - source: Finite modular intersection graph coloring consequence
+    lean: IntersectionBounds.franklWilson_coloring_bound
+    module: Challenge
+    status: proved
+acknowledgements: Mathlib and the Lean community; Ray-Chaudhuri, Frankl and Wilson for the classical results;
+  Alon, Babai and Suzuki for the polynomial-method exposition.
