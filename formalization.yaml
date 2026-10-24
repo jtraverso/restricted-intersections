@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: v0.4
+project:
+  name: 'Ray-Chaudhuri–Wilson: uniform families with restricted intersections'
+  description: 'Formalizes Theorem 3 of On t-designs (1975): a k-uniform family of subsets of an n-element
+    ground set whose distinct-pair intersection sizes lie in L ⊆ {0,...,k−1} has at most binomial(n,|L|)
+    members. Includes the actual-intersection-spectrum formulation, the uniform one-intersection bound,
+    and equality examples consisting of all s-subsets.'
+  authors:
+  - Juan Pablo Traverso Gianini
+  license: Apache-2.0
+  responsible_maintainers:
+  - Juan Pablo Traverso Gianini
+classification:
+  arxiv:
+  - math.CO
+  msc2020:
+  - 05D05
+  - 05B05
+  - 15A03
+sources:
+- title: On t-designs
+  authors:
+  - Dijen K. Ray-Chaudhuri
+  - Richard M. Wilson
+  id: doi:10.18910/7296
+  type: paper
+  location: Osaka Journal of Mathematics 12(3) (1975), 737–744, Theorem 3
+  relationship: formalizes
+  note: The institutional archival DOI identifies the open paper. Consulted https://www.i-repository.net/contents/osakacu/sugaku/111F0000002-01203-15.pdf.
+    Formalizes the uniform restricted-intersection bound, with stated corollaries and sharpness examples,
+    not the full paper. The new proof uses squarefree evaluation spaces, homogenization, and diagonal
+    separation rather than the original matrix argument.
+  license: unknown
+  author_endorsement: n/a
+status:
+  scope: Finite simple set families over an arbitrary finite vertex type, all k including zero, L a
+    finite set of nonnegative integers below k. Four selected statements and three explicit definitions
+    pass Comparator. Empty families and ground sets are included. Solution and library modules contain
+    no placeholders or custom axioms; Challenge contains four intentional theorem placeholders and no
+    definition placeholders.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - OpenAI Codex
+    framework: Codex
+    tool_setup: Constructed the polynomial evaluation-space proof from Mathlib finite sets, spans, linear
+      independence and finite-dimensional linear algebra. Used strict Lean compilation, axiom and boundary
+      auditing, and sandboxed Comparator with Lean and NanoDa. New code separates arbitrary-field evaluation/separation
+      lemmas from characteristic-zero uniform homogenization; no Frankl–Wilson theorem is assumed.
+    prompting_notes: Human-directed Spanish instructions to continue the prioritized backlog, reusing
+      available infrastructure. No external proving service or sub-agent was used.
+  notes: All new application proofs were produced in this project; existing Mathlib infrastructure is
+    reused. Costs and wall time were not tracked.
+fidelity:
+  divergences: 'Theorem 3 is stated with F : Finset (Finset V), so blocks are distinct, and Fintype.card
+    V = n. Uniform F k means every member has cardinality k. IntersectionsIn F L excludes identical
+    pairs; every l ∈ L must satisfy l < k, and |L| ≤ k is derived internally. The diagonal nonzero and
+    rank hypotheses are proved, not assumed. Zero is allowed in L; empty cases are included. The canonical
+    spectrum theorem uses exactly the values that occur. The one-intersection corollary concerns uniform
+    set families. The paper’s t-design lower bounds and later tight-design results are not formalized.
+    Evaluation functions implement the polynomial method directly, with their degree-space and homogeneous-span
+    properties proved.'
+review:
+  status: self-assessed
+  reviewers:
+  - OpenAI Codex (implementing agent, self-assessment)
+  notes: Compared the selected main statement with Theorem 3 of the open paper. Checked the materially
+    necessary uniformity condition, allowed zero intersections, the zero-degree empty-set case, and
+    a six-member sharp example. An explicit five-member nonuniform counterexample on four points is
+    verified. All four selected statements use only propext, Classical.choice and Quot.sound; four statements
+    and three definitions match the independent Challenge, and both Lean and NanoDa accept. No independent
+    human mathematical review or mathematical novelty is claimed. Local verification and prepared preflight
+    workflows do not constitute registry registration.
+alignment:
+  namespace: IntersectionBounds
+  statements:
+  - source: Ray-Chaudhuri–Wilson (1975), Theorem 3
+    lean: IntersectionBounds.rayChaudhuriWilson
+    module: Challenge
+    status: proved
+  - source: Theorem 3 with the actual intersection spectrum
+    lean: IntersectionBounds.card_le_choose_spectrum
+    module: Challenge
+    status: proved
+  - source: Uniform one-intersection corollary
+    lean: IntersectionBounds.uniform_fisher
+    module: Challenge
+    status: proved
+  - source: 'Sharpness: all s-subsets with L = {0,...,s−1}'
+    lean: IntersectionBounds.sharp_example
+    module: Challenge
+    status: proved
+acknowledgements: Mathlib and the Lean community; Ray-Chaudhuri and Wilson for the classical intersection
+  theorem.

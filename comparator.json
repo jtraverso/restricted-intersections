@@ -1,0 +1,21 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "IntersectionBounds.rayChaudhuriWilson",
+    "IntersectionBounds.card_le_choose_spectrum",
+    "IntersectionBounds.uniform_fisher",
+    "IntersectionBounds.sharp_example"
+  ],
+  "definition_names": [
+    "IntersectionBounds.Uniform",
+    "IntersectionBounds.IntersectionsIn",
+    "IntersectionBounds.intersectionSpectrum"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
